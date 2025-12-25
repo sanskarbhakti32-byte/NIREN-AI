@@ -2,15 +2,28 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
 export class GeminiService {
-  private ai: GoogleGenAI;
+  private ai: GoogleGenAI | null = null;
 
   constructor() {
-    this.ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const apiKey = process.env.API_KEY || (window as any).process?.env?.API_KEY;
+    if (apiKey) {
+      this.ai = new GoogleGenAI({ apiKey });
+    }
+  }
+
+  private getClient() {
+    if (!this.ai) {
+      const apiKey = process.env.API_KEY || (window as any).process?.env?.API_KEY;
+      if (!apiKey) throw new Error("Gemini API Key is not configured.");
+      this.ai = new GoogleGenAI({ apiKey });
+    }
+    return this.ai;
   }
 
   async generateStructuredContent(prompt: string, schema: any, modelName: string = 'gemini-3-flash-preview') {
     try {
-      const response = await this.ai.models.generateContent({
+      const client = this.getClient();
+      const response = await client.models.generateContent({
         model: modelName,
         contents: prompt,
         config: {
@@ -27,6 +40,7 @@ export class GeminiService {
 
   async analyzeImages(imageBuffers: string[], prompt: string, schema: any) {
     try {
+      const client = this.getClient();
       const imageParts = imageBuffers.map(buffer => ({
         inlineData: { 
           data: buffer.split(',')[1], 
@@ -41,7 +55,7 @@ export class GeminiService {
         ]
       };
 
-      const response = await this.ai.models.generateContent({
+      const response = await client.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents,
         config: {
@@ -58,7 +72,8 @@ export class GeminiService {
 
   async streamText(prompt: string, systemInstruction: string) {
     try {
-      return await this.ai.models.generateContentStream({
+      const client = this.getClient();
+      return await client.models.generateContentStream({
         model: 'gemini-3-flash-preview',
         contents: prompt,
         config: { systemInstruction }
