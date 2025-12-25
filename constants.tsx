@@ -12,7 +12,7 @@ import {
   TrendingUp, 
   Video 
 } from 'lucide-react';
-import { Tool, ToolID } from './types';
+import { Tool, ToolID } from './types.ts';
 
 export const TOOLS: Tool[] = [
   {

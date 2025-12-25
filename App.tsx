@@ -7,21 +7,21 @@ import {
   Sparkles,
   ChevronRight
 } from 'lucide-react';
-import { ToolID, Tool } from './types';
-import { TOOLS, ICON_MAP } from './constants';
-import ToolShell from './components/ToolShell';
+import { ToolID, Tool } from './types.ts';
+import { TOOLS, ICON_MAP } from './constants.tsx';
+import ToolShell from './components/ToolShell.tsx';
 
-// Dynamic Imports would be better but we'll use a switch for simplicity in one file
-import ProductDescTool from './views/ProductDescTool';
-import ImageListingTool from './views/ImageListingTool';
-import AdsWasteTool from './views/AdsWasteTool';
-import PromptGenTool from './views/PromptGenTool';
-import ProblemFinderTool from './views/ProblemFinderTool';
-import KeywordClusterTool from './views/KeywordClusterTool';
-import ReviewAnalyzerTool from './views/ReviewAnalyzerTool';
-import BrandVoiceTool from './views/BrandVoiceTool';
-import BusinessInsightsTool from './views/BusinessInsightsTool';
-import ReelIdeasTool from './views/ReelIdeasTool';
+// On static hosts, full extensions are required for ESM imports
+import ProductDescTool from './views/ProductDescTool.tsx';
+import ImageListingTool from './views/ImageListingTool.tsx';
+import AdsWasteTool from './views/AdsWasteTool.tsx';
+import PromptGenTool from './views/PromptGenTool.tsx';
+import ProblemFinderTool from './views/ProblemFinderTool.tsx';
+import KeywordClusterTool from './views/KeywordClusterTool.tsx';
+import ReviewAnalyzerTool from './views/ReviewAnalyzerTool.tsx';
+import BrandVoiceTool from './views/BrandVoiceTool.tsx';
+import BusinessInsightsTool from './views/BusinessInsightsTool.tsx';
+import ReelIdeasTool from './views/ReelIdeasTool.tsx';
 
 const App: React.FC = () => {
   const [activeToolId, setActiveToolId] = useState<ToolID | null>(null);
@@ -53,7 +53,7 @@ const App: React.FC = () => {
                 {ICON_MAP[tool.icon]}
               </div>
               <h3 className="text-xl font-bold text-slate-800 mb-2">{tool.name}</h3>
-              <p className="text-slate-500 text-sm leading-relaxed">{tool.description}</p>
+              <div className="text-slate-500 text-sm leading-relaxed">{tool.description}</div>
               <div className="mt-4 flex items-center text-indigo-600 font-semibold text-sm group-hover:translate-x-1 transition-transform">
                 Launch Tool <ChevronRight size={16} className="ml-1" />
               </div>
