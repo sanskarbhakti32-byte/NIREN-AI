@@ -3,10 +3,9 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  // Matches your GitHub repository name: https://sanskarbhakti32-byte.github.io/NIREN-AI/
-  base: '/NIREN-AI/',
+  // Vercel serves from the root, unlike GitHub Pages
+  base: '/',
   define: {
-    // This allows process.env.API_KEY to work in your code after bundling
     'process.env': process.env
   },
   build: {
