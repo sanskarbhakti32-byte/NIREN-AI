@@ -1,15 +1,17 @@
-
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  // This must match your GitHub repository name exactly
+  // Matches your GitHub repository name: https://sanskarbhakti32-byte.github.io/NIREN-AI/
   base: '/NIREN-AI/',
+  define: {
+    // This allows process.env.API_KEY to work in your code after bundling
+    'process.env': process.env
+  },
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    // Ensures assets are handled correctly on static hosts
     assetsDir: 'assets',
     rollupOptions: {
       output: {

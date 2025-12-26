@@ -1,21 +1,24 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 
 export class GeminiService {
   private ai: GoogleGenAI | null = null;
 
   constructor() {
-    const apiKey = process.env.API_KEY || (window as any).process?.env?.API_KEY;
-    if (apiKey) {
+    this.initClient();
+  }
+
+  private initClient() {
+    // Check multiple locations for the API key injected by the environment or shim
+    const apiKey = (window as any).process?.env?.API_KEY || process.env.API_KEY;
+    if (apiKey && !this.ai) {
       this.ai = new GoogleGenAI({ apiKey });
     }
   }
 
   private getClient() {
+    this.initClient();
     if (!this.ai) {
-      const apiKey = process.env.API_KEY || (window as any).process?.env?.API_KEY;
-      if (!apiKey) throw new Error("Gemini API Key is not configured.");
-      this.ai = new GoogleGenAI({ apiKey });
+      throw new Error("Gemini API Key is not configured. Please ensure API_KEY is set in your environment.");
     }
     return this.ai;
   }
