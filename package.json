@@ -4,6 +4,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "homepage": "https://sanskarbhakti32-byte.github.io/NIREN-AI/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
